@@ -49,18 +49,18 @@ const bfs = (graph, startingVertex) => {
   // add the vertices adjacent to the current vertex
   console.log('current vertex:', currentVertex)
   // initialise the queue with adjacent vertices of the root starting vertex
-  graph[currentVertex].map((vertex) => {
-    q.enqueue(vertex)
+  graph[currentVertex].map((neighbour) => {
+    q.enqueue(neighbour)
   });
   q.showQueue();
 
   while(!q.isEmpty()) {
     // access a vertex of the graph and add all of its adjacent vertices to the queue
-    graph[currentVertex].map((vertex) => {
+    graph[currentVertex].map((neighbour) => {
       // add the vertices that are adjacent to the starting vertex to the queue
-      if (!visited.includes(vertex) && !q.includes(vertex)) {
-        q.enqueue(vertex);
-        console.log('adding',vertex, 'to queue')
+      if (!visited.includes(neighbour) && !q.includes(neighbour)) {
+        q.enqueue(neighbour);
+        console.log('adding',neighbour, 'to queue')
       }
     })
     // take the current vertex, and put it in visited
@@ -68,8 +68,10 @@ const bfs = (graph, startingVertex) => {
     // take the first vertex in the queue and make it the current vertex
     currentVertex = q.firstInQueue();
     // remove the first vertex from the queue
+    console.log('visited:', visited)
     q.dequeue();
     if (q.isEmpty()) {
+      console.log('queue is empty')
       visited.push(currentVertex)
       console.log('current vertex:', currentVertex)
       console.log('visited:', visited)
@@ -77,7 +79,6 @@ const bfs = (graph, startingVertex) => {
       break
     }
     console.log('current vertex:', currentVertex)
-    console.log('visited:', visited)
     q.showQueue();
     console.log('adding new adjacent nodes to queue...')
   }
