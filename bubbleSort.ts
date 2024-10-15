@@ -10,15 +10,23 @@ const unsortedArray = [1,6,4,7,2,9,8,3,5]
 const bubbleSort = (unsortedArray) => {
   const arrayLength = unsortedArray.length
   for (let i=0; i < arrayLength - 1; i++) {
+    let swapped = false;
     for (let j=0; j < arrayLength - i - 1; j++) {
+      console.log(unsortedArray)
       if (unsortedArray[j] > unsortedArray[j+1]) {
         [unsortedArray[j], unsortedArray[j+1]] = [unsortedArray[j+1], unsortedArray[j]];
         console.log('swapped', unsortedArray[j], 'and', unsortedArray[j+1])
+        swapped = true;
       }
-      console.log(unsortedArray)
+    }
+    console.log(`End of pass ${i+1}:`, unsortedArray)
+    if (!swapped) {
+      console.log(`\nArray is sorted after ${i+1} passes`)
+      break // if no swapping occurs, the array is sorted
     }
   }
-  console.log(unsortedArray)
+
+  console.log("Final sorted array:", unsortedArray)
   return unsortedArray
 }
 
