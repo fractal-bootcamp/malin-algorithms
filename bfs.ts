@@ -79,6 +79,7 @@ const bfs = (graph, startingVertex) => {
       break
     }
     console.log('current vertex:', currentVertex)
+
     q.showQueue();
     console.log('adding new adjacent nodes to queue...')
   }
