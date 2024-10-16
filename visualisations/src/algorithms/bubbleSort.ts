@@ -5,25 +5,56 @@
 // An inner loop that goes through the array and swaps values if the first value is higher than the next value. This loop must loop through one less value each time it runs.
 // An outer loop that controls how many times the inner loop must run. For an array with n values, this outer loop must run n-1 times.
 
-export const BubbleSort = (unsortedArray) => {
+export type Swaps = [number, number]
+
+export type ArrayHistory = number[][]
+
+export interface BubbleSortState {
+  currentArrayState: number[],
+  swaps: Swaps[],
+}
+
+export const BubbleSort = (unsortedArray: number[]) => {
   const arrayLength = unsortedArray.length
+  const swaps:Swaps[] = []
+  const currentArrayState = [...unsortedArray]
+  const arrayStateHistory: ArrayHistory = [[...unsortedArray]]
+
+  // function onSwap(arrayState: number[]) {
+  //   arrayStateHistory.push(arrayState)
+  // }
+
   for (let i=0; i < arrayLength - 1; i++) {
     let swapped = false;
     for (let j=0; j < arrayLength - i - 1; j++) {
-      console.log(unsortedArray)
-      if (unsortedArray[j] > unsortedArray[j+1]) {
-        [unsortedArray[j], unsortedArray[j+1]] = [unsortedArray[j+1], unsortedArray[j]];
-        console.log('swapped', unsortedArray[j], 'and', unsortedArray[j+1])
+      //console.log(currentArrayState)
+      if (currentArrayState[j] > currentArrayState[j+1]) {
+        // swap the position of two items
+        [currentArrayState[j], currentArrayState[j+1]] = [currentArrayState[j+1], currentArrayState[j]];
+        // add the swaped pairs to the swap tracking history
+        swaps.push([currentArrayState[j], currentArrayState[j+1]])
+        // add the current array state to an array tracking its history
+        arrayStateHistory.push([...currentArrayState])
+        //onSwap(currentArrayState)
+        //console.log('swapped', currentArrayState[j], 'and', currentArrayState[j+1])
         swapped = true;
       }
     }
-    console.log(`End of pass ${i+1}:`, unsortedArray)
+    //console.log(`End of pass ${i+1}:`, currentArrayState)
     if (!swapped) {
-      console.log(`\nArray is sorted after ${i+1} passes`)
-      break // if no swapping occurs, the array is sorted
+      //console.log(`\nArray is sorted after ${i+1} passes`)
+      //break // if no swapping occurs, the array is sorted
     }
   }
 
-  console.log("Final sorted array:", unsortedArray)
-  return unsortedArray
+  const sortedArray = [...currentArrayState]
+
+  return {
+    sorted: sortedArray,
+    stateHistory: arrayStateHistory,
+    swaps: swaps
+  }
 }
+
+const results = BubbleSort([86,3,67,43,4,6,7,3,2,24,14,18])
+console.log(results)
