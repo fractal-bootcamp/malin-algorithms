@@ -5,18 +5,22 @@
 // An inner loop that goes through the array and swaps values if the first value is higher than the next value. This loop must loop through one less value each time it runs.
 // An outer loop that controls how many times the inner loop must run. For an array with n values, this outer loop must run n-1 times.
 
-export type Swaps = [number, number]
+export type Swaps = [number, number] | [null, null]
 
 export type ArrayHistory = number[][]
 
 export interface BubbleSortState {
-  currentArrayState: number[],
+  sorted: number[]
+  stateHistory: ArrayHistory,
   swaps: Swaps[],
+  swapIndexes: Swaps[]
+
 }
 
-export const BubbleSort = (unsortedArray: number[]) => {
+export const BubbleSort = (unsortedArray: number[]): BubbleSortState => {
   const arrayLength = unsortedArray.length
   const swaps:Swaps[] = []
+  const swapIndexes:Swaps[] = []
   const currentArrayState = [...unsortedArray]
   const arrayStateHistory: ArrayHistory = [[...unsortedArray]]
 
@@ -33,6 +37,7 @@ export const BubbleSort = (unsortedArray: number[]) => {
         [currentArrayState[j], currentArrayState[j+1]] = [currentArrayState[j+1], currentArrayState[j]];
         // add the swaped pairs to the swap tracking history
         swaps.push([currentArrayState[j], currentArrayState[j+1]])
+        swapIndexes.push([j, j+1])
         // add the current array state to an array tracking its history
         arrayStateHistory.push([...currentArrayState])
         //onSwap(currentArrayState)
@@ -52,9 +57,12 @@ export const BubbleSort = (unsortedArray: number[]) => {
   return {
     sorted: sortedArray,
     stateHistory: arrayStateHistory,
-    swaps: swaps
+    swaps: swaps,
+    swapIndexes: swapIndexes 
   }
 }
 
-const results = BubbleSort([86,3,67,43,4,6,7,3,2,24,14,18])
+const results = BubbleSort([
+  8, 54, 23, 76, 12, 67, 45, 31, 23, 76, 12, 67, 45, 31
+])
 console.log(results)
