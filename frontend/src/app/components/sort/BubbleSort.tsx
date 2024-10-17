@@ -7,7 +7,7 @@ const unsortedArray = [
 const { stateHistory, swapIndexes } = BubbleSort([...unsortedArray]);
 
 // visualise initial state
-export const InitialUnorderedState = () => {
+const BubbleSortAnimation = () => {
   const [animationIndex, setAnimationIndex] = useState<number>(0)
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const sortedArray = stateHistory[animationIndex]
@@ -89,8 +89,5 @@ export const InitialUnorderedState = () => {
   );
 }
 
-// get the state changes
+export default BubbleSortAnimation
 
-// visualise each state change 
-
-// reach sorted state
