@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { BubbleSort, Swaps, ArrayHistory, BubbleSortState } from "./algorithms/bubbleSort";
 
-const unsortedArray = [
-  8, 54, 23, 76, 12, 67, 45, 31, 23, 76, 12, 67, 45, 31
-];
+interface BubbleSortAnimationProps {
+  stateHistory: ArrayHistory;
+  swapIndexes: Swaps[];
+}
 
 // visualise initial state
-const BubbleSortAnimation = (stateHistory: ArrayHistory, swapIndexes: Swaps[]) => {
+const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({ stateHistory, swapIndexes }) => {
   const [animationIndex, setAnimationIndex] = useState<number>(0)
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const sortedArray = stateHistory[animationIndex]
