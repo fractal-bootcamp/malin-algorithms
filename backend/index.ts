@@ -29,28 +29,29 @@ app.listen(port, () => {
 // });
 
 // Binary search
-import { binarySearch } from "./algorithms/search/binary-search";
+// import { binarySearch } from "./algorithms/search/binary-search";
 
-app.post("/algos/search/binary", (req, res) => {
-	const node = req.body;
-	console.log(node);
-	const algoOutput = binarySearch(node);
-	res.status(200).json(algoOutput);
-});
+// app.post("/algos/search/binary", (req, res) => {
+// 	const node = req.body;
+// 	console.log(node);
+// 	const algoOutput = binarySearch(node);
+// 	res.status(200).json(algoOutput);
+// });
 
 // // BFS
 
 // // DFS
 
 // Bubble sort
-// import { BubbleSort } from "./algorithms/sort/bubbleSort";
+import { BubbleSort } from "./algorithms/sort/bubbleSort";
 
-// app.post("/algos/sort/bubble", (req, res) => {
-// 	const node = req.body;
-// 	//console.log(node);
-// 	const algoOutput = BubbleSort(node);
-// 	res.status(200).json(algoOutput);
-// });
+app.post("/algorithms/sort/bubble", (req, res) => {
+	const node = req.body.array; // this should accept an unsorted array
+	console.log('recieved rquest with:', node);
+	const algoOutput = BubbleSort(node);
+	console.log('sending back sorted array:', algoOutput)
+	res.status(200).json(algoOutput); // this will send a sorted array object of type BubbleSortState back
+});
 
 // // Selection sort
 // import { selectionSort } from "./algorithms/sort/selectionSort";

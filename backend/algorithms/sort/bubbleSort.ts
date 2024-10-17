@@ -61,8 +61,3 @@ export const BubbleSort = (unsortedArray: number[]): BubbleSortState => {
     swapIndexes: swapIndexes 
   }
 }
-
-const results = BubbleSort([
-  8, 54, 23, 76, 12, 67, 45, 31, 23, 76, 12, 67, 45, 31
-])
-console.log(results)
