@@ -50,7 +50,7 @@ export default function Page() {
 
   return (
     <div>
-      {JSON.stringify(stateHistory)}
+      <BubbleSortAnimation stateHistory={stateHistory} swapIndexes={swapIndexes} />
     </div>
   )
 
