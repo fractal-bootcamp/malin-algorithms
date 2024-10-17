@@ -4,10 +4,17 @@ import { BubbleSort, Swaps, ArrayHistory, BubbleSortState } from "./algorithms/b
 interface BubbleSortAnimationProps {
   stateHistory: ArrayHistory;
   swapIndexes: Swaps[];
+  setArraySize: React.Dispatch<React.SetStateAction<ArraySize>>
 }
 
+type ArraySize = 'small' | 'medium' | 'large';
+
 // visualise initial state
-const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({ stateHistory, swapIndexes }) => {
+const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
+  stateHistory,
+  swapIndexes,
+  setArraySize
+}) => {
   const [animationIndex, setAnimationIndex] = useState<number>(0)
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const sortedArray = stateHistory[animationIndex]
@@ -34,7 +41,7 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({ stateHistory,
       } else {
         setIsRunning(false)
       }
-    }, 300);
+    }, 50);
 
     return () => clearTimeout(timeoutId)
   }, [animationIndex, isFinished, isRunning])
@@ -70,19 +77,38 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({ stateHistory,
             </div>
           ))}
         </div>
-        <div className="flex items-center ml-8 p-2">
-          <button
-            className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors"
-            onClick={handleBubbleSort}
-          >
-            {'Bubble Sort'}
-          </button>
-          <button
-            className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
+        <div className="flex flex-col items-center justify-between ml-8 p-2 border-2">
+          <div>
+            <h2 className="text-center">Set Size of Array</h2>
+            <div className="flex flex-col my-2">
+              <button
+                className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
+                onClick={() => setArraySize("small")}
+              >small</button>
+              <button
+                className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
+                onClick={() => setArraySize("medium")}
+              >medium</button>
+              <button
+                className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
+                onClick={() => setArraySize("large")}
+              >large</button>
+            </div>
+          </div>
+          <div className="border-2 flex">
+            <button
+              className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
+              onClick={handleBubbleSort}
+            >
+              {'Sort'}
+            </button>
+            <button
+              className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
+              onClick={handleReset}
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </div>
     </div>
