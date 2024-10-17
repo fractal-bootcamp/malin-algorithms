@@ -4,10 +4,9 @@ import { BubbleSort, Swaps, ArrayHistory, BubbleSortState } from "./algorithms/b
 const unsortedArray = [
   8, 54, 23, 76, 12, 67, 45, 31, 23, 76, 12, 67, 45, 31
 ];
-const { stateHistory, swapIndexes } = BubbleSort([...unsortedArray]);
 
 // visualise initial state
-const BubbleSortAnimation = () => {
+const BubbleSortAnimation = (stateHistory: ArrayHistory, swapIndexes: Swaps[]) => {
   const [animationIndex, setAnimationIndex] = useState<number>(0)
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const sortedArray = stateHistory[animationIndex]

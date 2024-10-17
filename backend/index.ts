@@ -46,9 +46,10 @@ app.listen(port, () => {
 import { BubbleSort } from "./algorithms/sort/bubbleSort";
 
 app.post("/algorithms/sort/bubble", (req, res) => {
-	const node = req.body; // this should accept an unsorted array
-	console.log(node);
+	const node = req.body.array; // this should accept an unsorted array
+	console.log('recieved rquest with:', node);
 	const algoOutput = BubbleSort(node);
+	console.log('sending back sorted array:', algoOutput)
 	res.status(200).json(algoOutput); // this will send a sorted array object of type BubbleSortState back
 });
 
