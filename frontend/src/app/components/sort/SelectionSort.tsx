@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-// Types
+
 import type {
-  BubbleSortAnimationProps,
+  SelectionSortState,
   Swaps,
+  ArrayHistory,
+  ArraySize
 } from "@/types/typesSort"
+
+
+type ArraySize = 'small' | 'medium' | 'large';
 
 // visualise initial state
 const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({

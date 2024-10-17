@@ -6,10 +6,11 @@ import React, { useEffect, useState } from "react";
 import {
   BubbleSortState,
   ArrayHistory,
-  Swaps
+  Swaps,
+  ArraySize
 } from "@/types/typesSort"
 
-type ArraySize = 'small' | 'medium' | 'large';
+
 
 
 // Express utils stores the functions that will query the backend server with an unsortedArray and recieve a sortedArray
