@@ -22,9 +22,15 @@ export interface BubbleSortAnimationProps {
 
 export interface SelectionSortState {
   sorted: number[]
-  stateHistory: ArrayHistory,
+  stateHistory: ArrayHistory[],
   swapIndexes: Swaps[],
   smallestIndexHistory: number[]
+}
+
+export interface SelectionSortAnimationProps {
+  stateHistory: ArrayHistory[];
+  swapIndexes: Swaps[];
+  setArraySize: React.Dispatch<React.SetStateAction<ArraySize>>
 }
 
 // insertion sort

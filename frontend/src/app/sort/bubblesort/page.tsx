@@ -10,9 +10,6 @@ import {
   ArraySize
 } from "@/types/typesSort"
 
-
-
-
 // Express utils stores the functions that will query the backend server with an unsortedArray and recieve a sortedArray
 import {
   getBubbleSort,

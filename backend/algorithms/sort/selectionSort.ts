@@ -20,7 +20,7 @@ import type {
 
 export const selectionSort = (unsortedArray: number[]): SelectionSortState => {
   const currentArrayState = [...unsortedArray]
-  const arrayStateHistory: ArrayHistory = [[...unsortedArray],[0]]
+  const arrayStateHistory: ArrayHistory[] = [[[...unsortedArray],[0]]]
   const smallestIndexHistory: number[] = []
   const swapIndexes:Swaps[] = []
   const endPasses: ArrayHistory = [[],[]]
@@ -43,17 +43,16 @@ export const selectionSort = (unsortedArray: number[]): SelectionSortState => {
         swapIndexes.push([i,j])
       }
       // log every state of the algorithm
-      arrayStateHistory.push([...unsortedArray],[indexOfSmallest])
+      arrayStateHistory.push([[...unsortedArray],[indexOfSmallest]])
     }
     // after each run of the inner loop we have the location of the next smallest value
     // we need to take this and add it to the beginning
     moveArrayItem(unsortedArray, indexOfSmallest, i)
   }
   const sortedArray = [...unsortedArray]
-  
-  console.log(smallestIndexHistory.length)
-  console.log(arrayStateHistory.length)
-  console.log(swapIndexes.length)
+  console.log(arrayStateHistory[1])
+
+
   return {
     sorted: sortedArray,
     stateHistory: arrayStateHistory,

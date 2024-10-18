@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 // Types
 import {
-  BubbleSortState,
+  SelectionSortState,
   ArrayHistory,
   Swaps,
   ArraySize
@@ -12,20 +12,14 @@ import {
 
 // Express utils stores the functions that will query the backend server with an unsortedArray and recieve a sortedArray
 import {
-  getBubbleSort,
+  getSelectionSort,
 } from "@/utils/express";
 
 // // Components
-// import AnimationHandler from "@/components/general/AnimationHandler";
-import BubbleSortAnimation from "@/app/components/sort/BubbleSort";
-// import Selection from "@/components/sort/Selection";
-// import Insertion from "@/components/sort/Insertion";
-// import Merge from "@/components/sort/Merge";
-// import Quick from "@/components/sort/Quick";
+import SelectionSortAnimation from "@/app/components/sort/SelectionSort";
 
 export default function Page() {
-  const unsortedArray = [22, 13, 71, 49, 37, 27, 11, 7, 42, 67, 103];
-  const [sortState, setSortState] = useState<BubbleSortState | null>(null);
+  const [sortState, setSortState] = useState<SelectionSortState | null>(null);
   const [arraySize, setArraySize] = useState<ArraySize>("small")
   // const [sorted, setSorted] = useState<number[]>([])
 
@@ -44,7 +38,7 @@ export default function Page() {
   useEffect(() => {
     const fetchSortData = async () => {
       try {
-        const result = await getBubbleSort(generateRandomArrays(arraySize));
+        const result = await getSelectionSort(generateRandomArrays(arraySize));
         console.log('recieved the following:', result)
         setSortState(result);
         // setSorted(result.sorted)
@@ -64,7 +58,7 @@ export default function Page() {
 
   return (
     <div>
-      <BubbleSortAnimation stateHistory={stateHistory} swapIndexes={swapIndexes} setArraySize={setArraySize} />
+      <SelectionSortAnimation stateHistory={stateHistory} swapIndexes={swapIndexes} setArraySize={setArraySize} />
     </div>
   )
 

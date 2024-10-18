@@ -53,15 +53,15 @@ app.post("/algorithms/sort/bubble", (req, res) => {
 	res.status(200).json(algoOutput); // this will send a sorted array object of type BubbleSortState back
 });
 
-// // Selection sort
-// import { selectionSort } from "./algorithms/sort/selectionSort";
+// Selection sort
+import { selectionSort } from "./algorithms/sort/selectionSort";
 
-// app.post("/algos/sort/selection", (req, res) => {
-// 	const node = req.body;
-// 	console.log(node);
-// 	const algoOutput = selectionSort(node);
-// 	res.status(200).json(algoOutput);
-// });
+app.post("/algorithms/sort/selection", (req, res) => {
+	const node = req.body.array;
+	console.log(node);
+	const algoOutput = selectionSort(node);
+	res.status(200).json(algoOutput);
+});
 
 // // Insertion sort
 // import { insertionSort } from "./algorithms/sort/insertionSort";

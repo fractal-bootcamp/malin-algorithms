@@ -22,7 +22,7 @@ export interface BubbleSortAnimationProps {
 
 export interface SelectionSortState {
   sorted: number[]
-  stateHistory: ArrayHistory,
+  stateHistory: ArrayHistory[],
   swapIndexes: Swaps[],
   smallestIndexHistory: number[]
 }

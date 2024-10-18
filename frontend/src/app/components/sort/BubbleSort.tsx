@@ -58,7 +58,7 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
 
   // lets say each number represents the height of a div
   return (
-    <div className="bg-sky-50 flex flex-col items-center justify-center bg-gradient-to-b from-sky-100 to-rose-100 w-full h-screen p-4">
+    <div className="bg-sky-50 flex flex-col items-center  bg-gradient-to-b from-sky-100 to-rose-100 w-full h-screen p-4 text-black">
       <h1 className="text-2xl font-bold mb-4">Bubble Sort Visualization</h1>
       <div>{isFinished ? 'DONE!' : ''}</div>
       <div className="flex flex-row w-full h-5/6 border-2 border-gray-300 rounded-lg overflow-hidden">
@@ -66,7 +66,7 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
           {sortedArray.map((magnitude, index) => (
             <div
               key={index}
-              className={`w-16 ${beingCompared.includes(index) ? `bg-yellow-400` : `bg-blue-400`} rounded-t-sm transition-all flex items-end justify-center mx-px`}
+              className={`w-16 ${beingCompared.includes(index) ? `bg-yellow-300` : `bg-blue-300`} rounded-t-sm transition-all flex items-end justify-center mx-px`}
               style={{ height: `${magnitude}%` }}
             >
               <span className="text-white font-bold pb-1"></span>

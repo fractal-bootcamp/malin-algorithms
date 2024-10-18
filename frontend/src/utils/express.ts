@@ -3,6 +3,7 @@ import axios from "axios";
 // import type { NodeLinearSearch, NodeBinarySearch } from "../../../types/typesSearch";
 import type {
 	BubbleSortState,
+	SelectionSortState
 } from "@/types/typesSort";
 
 // Sort: bubble sort
@@ -18,10 +19,10 @@ export async function getBubbleSort(unsortedArray: number[]): Promise<BubbleSort
 }
 
 // Sort: selection sort
-export async function getSelectionSort(unsortedArray: number[]): Promise<BubbleSortState> {
+export async function getSelectionSort(unsortedArray: number[]): Promise<SelectionSortState> {
 	const res = await axios({
 		method: "POST",
-		url: "http://localhost:3001/algorithms/sort/bubble",
+		url: "http://localhost:3001/algorithms/sort/selection",
 		data: {
 			array: unsortedArray,
 		},
