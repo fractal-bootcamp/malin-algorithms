@@ -1,72 +1,75 @@
 import { useState, useEffect } from "react";
-// Types
+
 import type {
-  BubbleSortAnimationProps,
+  SelectionSortAnimationProps,
+  SelectionSortState,
   Swaps,
+  ArrayHistory,
+  ArraySize
 } from "@/types/typesSort"
 
+
+type ArraySize = 'small' | 'medium' | 'large';
+
 // visualise initial state
-const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
+const SelectionSortAnimation: React.FC<SelectionSortAnimationProps> = ({
+  sorted,
   stateHistory,
-  swapIndexes,
+  smallestIndexHistory,
   setArraySize
 }) => {
   const [animationIndex, setAnimationIndex] = useState<number>(0)
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const sortedArray = stateHistory[animationIndex]
-  const [beingCompared, setBeingCompared] = useState<Swaps>([0, 1])
-
-  console.log(swapIndexes)
-  console.log('compare', beingCompared)
+  const smallestIndex = stateHistory[animationIndex][1][0]
 
   const isFinished = animationIndex >= stateHistory.length - 1 // if it is, then we're finished
 
-  console.log(animationIndex)
-  useEffect(() => {
-    if (!isRunning || isFinished) return;
-    console.log(animationIndex, stateHistory, stateHistory[animationIndex])
 
+  useEffect(() => {
+    if (!isRunning) {
+      return;
+    }
+    console.log(animationIndex)
     const timeoutId = setTimeout(() => {
       if (animationIndex < stateHistory.length - 1) {
-        const nextIndex = animationIndex + 1;
-        setAnimationIndex(nextIndex);
-        // highlight two that are being compared
-        setBeingCompared(swapIndexes[animationIndex] || [])
-        console.log('swap', swapIndexes[animationIndex + 1])
-        // move the animation to the next frame
+        setAnimationIndex(prevIndex => prevIndex + 1);
       } else {
-        setIsRunning(false)
+        // Pause on the final state for a moment before stopping
+        setTimeout(() => {
+          setIsRunning(false);
+        }, 50); // Adjust this delay as needed
       }
-    }, 50);
+    }, 20);
 
     return () => clearTimeout(timeoutId)
-  }, [animationIndex, isFinished, isRunning])
+  }, [animationIndex, isFinished, isRunning, stateHistory.length])
 
-  const handleBubbleSort = () => {
+  const handleSelectionSort = () => {
     // ideally this will call the bubbleSort function, which will pass state for every position change
     // every position change will update the state of sortedArray, which should get reflected in a change in the divs
     // you can add a slight time delay to ensure the visualisation flows
     setIsRunning(true)
-    setAnimationIndex(1);
+    setAnimationIndex(0)
   }
 
   const handleReset = () => {
     setAnimationIndex(0)
     setIsRunning(false)
-    setBeingCompared([0, 1])
   }
 
   // lets say each number represents the height of a div
   return (
-    <div className="bg-sky-50 flex flex-col items-center  bg-gradient-to-b from-sky-100 to-rose-100 w-full h-screen p-4 text-black">
-      <h1 className="text-2xl font-bold mb-4">Bubble Sort Visualization</h1>
+    <div className="bg-sky-50 flex flex-col items-center justify-center bg-gradient-to-b from-sky-100 to-rose-100 w-full h-screen p-4 text-black">
+      <h1 className="text-2xl font-bold mb-4">Selection Sort Visualization</h1>
       <div>{isFinished ? 'DONE!' : ''}</div>
+      <div>test {JSON.stringify(sorted)}</div>
       <div className="flex flex-row w-full h-5/6 border-2 border-gray-300 rounded-lg overflow-hidden">
         <div className="flex-grow h-full flex items-end justify-start p-2 overflow-x-auto">
-          {sortedArray.map((magnitude, index) => (
+          {sortedArray[0].map((magnitude, index) => (
             <div
               key={index}
-              className={`w-16 ${beingCompared.includes(index) ? `bg-yellow-300` : `bg-blue-300`} rounded-t-sm transition-all flex items-end justify-center mx-px`}
+              className={`w-16 ${index === smallestIndex ? "bg-green-400" : "bg-blue-400"} rounded-t-sm transition-all flex items-end justify-center mx-px`}
               style={{ height: `${magnitude}%` }}
             >
               <span className="text-white font-bold pb-1"></span>
@@ -79,22 +82,31 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
             <div className="flex flex-col my-2">
               <button
                 className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
-                onClick={() => setArraySize("small")}
+                onClick={() => {
+                  setAnimationIndex(0)
+                  setArraySize("small")
+                }}
               >small</button>
               <button
                 className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
-                onClick={() => setArraySize("medium")}
+                onClick={() => {
+                  setAnimationIndex(0)
+                  setArraySize("medium")
+                }}
               >medium</button>
               <button
                 className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
-                onClick={() => setArraySize("large")}
+                onClick={() => {
+                  setAnimationIndex(0)
+                  setArraySize("large")
+                }}
               >large</button>
             </div>
           </div>
           <div className="border-2 flex">
             <button
               className="border-2 border-neutral-950 p-2 rounded hover:bg-gray-200 transition-colors m-2"
-              onClick={handleBubbleSort}
+              onClick={handleSelectionSort}
             >
               {'Sort'}
             </button>
@@ -111,5 +123,5 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
   );
 }
 
-export default BubbleSortAnimation
+export default SelectionSortAnimation
 

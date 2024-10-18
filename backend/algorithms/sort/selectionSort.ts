@@ -6,9 +6,25 @@
 // move the second value to the second position of the array
 // and repeat n number of times
 
-const unsortedArray = [20,5,3,78,5,990,1,39,4,12,5,8]
+//animation notes:
+// in every pass, highlight the smallest number index
+// after a full pass, move the smallest to the begining (i.e. swap)
+// highlight the ones that have already been sorted
 
-export const selectionSort = (unsortedArray: number[]): number[] => {
+import type {
+  SelectionSortState,
+  Swaps,
+  ArrayHistory,
+  ArraySize
+} from "../../types/typesSort"
+
+export const selectionSort = (unsortedArray: number[]): SelectionSortState => {
+  const currentArrayState = [...unsortedArray]
+  const arrayStateHistory: ArrayHistory[] = [[[...unsortedArray],[0]]]
+  const smallestIndexHistory: number[] = []
+  const swapIndexes:Swaps[] = []
+  const endPasses: ArrayHistory = [[],[]]
+  
   const moveArrayItem = (array: number[], fromIndex: number, toIndex: number) => {
     // remove the smallest element from the array and save it to a variable
     const [item] = array.splice(fromIndex, 1);
@@ -16,18 +32,36 @@ export const selectionSort = (unsortedArray: number[]): number[] => {
     return array;
   }
   
-  for (let i = 0; i < unsortedArray.length; i++) {
+  for (let i = 0; i < unsortedArray.length - 1; i++) {
     let indexOfSmallest = i;
+    
     // starting at the (i+1)th position so we don't include the first value in the array
     for (let j = i+1; j < unsortedArray.length; j++) {
       if (unsortedArray[j] < unsortedArray[indexOfSmallest]) {
         indexOfSmallest = j;
+        smallestIndexHistory.push(indexOfSmallest)
+        swapIndexes.push([i,j])
       }
+      // log every state of the algorithm
+      arrayStateHistory.push([[...unsortedArray],[indexOfSmallest]])
     }
     // after each run of the inner loop we have the location of the next smallest value
     // we need to take this and add it to the beginning
     moveArrayItem(unsortedArray, indexOfSmallest, i)
   }
+  // Add the final sorted state
+  arrayStateHistory.push([[...unsortedArray], [unsortedArray.length - 1]])
+
   const sortedArray = [...unsortedArray]
-  return sortedArray
+  
+
+
+  return {
+    sorted: sortedArray,
+    stateHistory: arrayStateHistory,
+    smallestIndexHistory: smallestIndexHistory,
+    swapIndexes: swapIndexes
+  }
 }
+
+console.log(selectionSort([59,24, 3,6,7,2,8,49,32,20]))

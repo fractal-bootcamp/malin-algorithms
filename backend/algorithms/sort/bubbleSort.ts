@@ -5,17 +5,12 @@
 // An inner loop that goes through the array and swaps values if the first value is higher than the next value. This loop must loop through one less value each time it runs.
 // An outer loop that controls how many times the inner loop must run. For an array with n values, this outer loop must run n-1 times.
 
-export type Swaps = [number, number] | [null, null]
-
-export type ArrayHistory = number[][]
-
-export interface BubbleSortState {
-  sorted: number[]
-  stateHistory: ArrayHistory,
-  swaps: Swaps[],
-  swapIndexes: Swaps[]
-
-}
+// Types
+import type {
+  BubbleSortState,
+  Swaps,
+  ArrayHistory
+} from "../../types/typesSort"
 
 export const BubbleSort = (unsortedArray: number[]): BubbleSortState => {
   const arrayLength = unsortedArray.length
@@ -48,7 +43,7 @@ export const BubbleSort = (unsortedArray: number[]): BubbleSortState => {
     //console.log(`End of pass ${i+1}:`, currentArrayState)
     if (!swapped) {
       //console.log(`\nArray is sorted after ${i+1} passes`)
-      //break // if no swapping occurs, the array is sorted
+      break // if no swapping occurs, the array is sorted
     }
   }
 

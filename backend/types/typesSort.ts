@@ -27,13 +27,6 @@ export interface SelectionSortState {
   smallestIndexHistory: number[]
 }
 
-export interface SelectionSortAnimationProps {
-  sorted: number[]
-  stateHistory: ArrayHistory[];
-  smallestIndexHistory: number[];
-  setArraySize: React.Dispatch<React.SetStateAction<ArraySize>>
-}
-
 // insertion sort
 
 // merge sort
