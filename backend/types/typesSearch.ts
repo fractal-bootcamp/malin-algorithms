@@ -6,7 +6,7 @@ export type Graph<T> = {
 
 export type Vertex = string;
 
-export type dfsAnimationProps = {
+export type DFSAnimationProps = {
   graph: Graph<string>,
   currentVertex: string,
   target: string

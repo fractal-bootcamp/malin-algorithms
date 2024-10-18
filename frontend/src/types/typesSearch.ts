@@ -6,6 +6,13 @@ export type Graph<T> = {
 
 export type Vertex = string;
 
+export type DFSAnimationProps = {
+  graph: Graph<string>,
+  currentVertex: string,
+  target: string,
+  searchPath: Set<string> | null
+}
+
 // bfs
 // Define the Queue interface
 export type Queue<T> = {

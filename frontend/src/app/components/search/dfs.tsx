@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import type { Graph, DFSAnimationProps } from '@/types/typesSearch';
 
-
-type Graph<T> = {
-  [key: string]: T[]
-};
-
-const graph: Graph<string> = {
-  A: ['B', 'C'],
-  B: ['A', 'D', 'E'],
-  C: ['A', 'F'],
-  D: ['B'],
-  E: ['B', 'F'],
-  F: ['C', 'E']
-};
-
-export default function dfsAnimation({
+export default function DFSAnimation({
   graph,
   currentVertex,
   target
-}) {
+}: DFSAnimationProps) {
   const [currentVertex, setCurrentVertex] = useState<string>('A')
   const [target, setTarget] = useState<string>('D');
   const [result, setResult] = useState<Set<string> | null>(null);
@@ -27,10 +14,13 @@ export default function dfsAnimation({
   useEffect(() => {
 
 
-
   }, [])
 
+  return (
+    <div>
 
+    </div>
+  )
 
 
 }
