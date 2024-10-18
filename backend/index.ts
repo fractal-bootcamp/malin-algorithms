@@ -41,6 +41,17 @@ app.listen(port, () => {
 // // BFS
 
 // // DFS
+import { DFS } from "./algorithms/search/dfs-search"
+
+app.post("/algorithms/sort/dfs", (req, res) => {
+	const {graph, currentVertex, target} = req.body; // this should accept an object
+	console.log('recieved rquest with:', req.body);
+	const algoOutput = DFS(graph, currentVertex, target);
+	const result = algoOutput ? algoOutput :`${target} not found in graph`
+	console.log('sending back sorted array:', result)
+	res.status(200).json(result); // this will send a sorted array object of type BubbleSortState back
+});
+
 
 // Bubble sort
 import { BubbleSort } from "./algorithms/sort/bubbleSort";

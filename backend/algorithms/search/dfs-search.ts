@@ -19,7 +19,7 @@ type Vertex = string;
 // - starting vertex
 // - a data structure for storing visited nodes -> we define its default value in the parameter as well as an empty set
 // the return of the dfs search will be either a set of strings or null if the search failed
-export default function dfs(graph: Graph<string>, currentVertex: string, target: string, visited: Set<string> = new Set()): Set<string> | null {
+export function DFS(graph: Graph<string>, currentVertex: string, target: string, visited: Set<string> = new Set()): Set<string> | null {
   // add the currentVertex to the visited array
   visited.add(currentVertex);
   // define the neighbours of the currentVertex
@@ -34,15 +34,13 @@ export default function dfs(graph: Graph<string>, currentVertex: string, target:
   for (const neighbour of neighbours) {
     // if the neighbour we are visiting is not already contained in the array, then implement dfs again
     if (!visited.has(neighbour)) {
-      const search = dfs(graph, neighbour, target, visited);
+      const search = DFS(graph, neighbour, target, visited);
       // if the search finds something return, else return "not found"
       if (search) {
         return search;
       }
     }
   }
+  // if we've exhausted all neighbour without finding the target, we return null
+  return null
 }
-
-const target = "T"
-const result = dfs(graph, "A", target)
-console.log(result ? result : `${target} not found in graph`)

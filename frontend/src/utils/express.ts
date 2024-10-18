@@ -6,6 +6,25 @@ import type {
 	SelectionSortState
 } from "@/types/typesSort";
 
+import type {
+	Graph,
+	Vertex
+} from "@/types/typesSearch"
+
+// Search: DFS
+export async function getDFS(graph: Graph<string>, ): Promise<Set<string> | null> {
+	const res = await axios({
+		method: "POST",
+		url: "http://localhost:3001/algorithms/search/dfs-search",
+		data: {
+			array: unsortedArray,
+		},
+	}); // send an unsortedArray and recieve a sorted Array
+	return res.data;
+}
+
+
+
 // Sort: bubble sort
 export async function getBubbleSort(unsortedArray: number[]): Promise<BubbleSortState> {
 	const res = await axios({
