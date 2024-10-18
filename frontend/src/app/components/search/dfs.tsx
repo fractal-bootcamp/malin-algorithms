@@ -1,84 +1,109 @@
 import React, { useState, useEffect } from 'react';
-import type { Graph, DFSAnimationProps } from '@/types/typesSearch';
+import type { Graph, DFSAnimationProps, TraversalStep } from '@/types/typesSearch';
+
+
+// Node positions (you might want to calculate these dynamically for larger graphs)
+const nodePositions: { [key: string]: { x: number; y: number } } = {
+  A: { x: 200, y: 50 },
+  B: { x: 100, y: 150 },
+  C: { x: 300, y: 150 },
+  D: { x: 50, y: 250 },
+  E: { x: 150, y: 250 },
+  F: { x: 250, y: 250 },
+};
 
 export default function DFSAnimation({
   graph,
-  currentVertex,
-  target,
-  searchPath
+  traversalSteps
 }: DFSAnimationProps) {
-  // const [currentVertex, setCurrentVertex] = useState<string>(currentVertex)
-  // const [target, setTarget] = useState<string>(target);
-  const [result, setResult] = useState<Set<string> | null>(null);
-  const [visitedOrder, setVisitedOrder] = useState<string[]>([]);
-  const [animationStep, setAnimationStep] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [visitedNodes, setVisitedNodes] = useState<Set<string>>(new Set());
+  const [currentNode, setCurrentNode] = useState<string | null>(null);
+  const [highlightedEdge, setHighlightedEdge] = useState<[string, string] | null>(null);
 
-  // useEffect(() => {
-  //   if (searchPath) {
-  //     const path = Array.from(searchPath);
-  //     const animationInterval = setInterval(() => {
-  //       setAnimationStep((prevStep) => )
-  //     })
-  //   }
+  useEffect(() => {
+    if (traversalSteps && traversalSteps.length > 0) {
+      animateTraversal();
+    }
+  }, [traversalSteps]);
 
+  const animateTraversal = () => {
+    if (!traversalSteps) return;
+    let stepIndex = 0;
+    const interval = setInterval(() => {
+      if (stepIndex >= traversalSteps.length) {
+        clearInterval(interval);
+        return;
+      }
 
-  // }, [])
+      const step = traversalSteps[stepIndex];
+      setCurrentStep(stepIndex);
 
-  function getNodePosition(node: string): string {
-    const positions: { [key: string]: string } = {
-      A: 'top-0 left-1/2 -translate-x-1/2',
-      B: 'top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2',
-      C: 'top-1/4 right-1/4 translate-x-1/2 -translate-y-1/2',
-      D: 'bottom-1/4 left-1/4 -translate-x-1/2 translate-y-1/2',
-      E: 'bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2',
-      F: 'bottom-0 left-1/2 -translate-x-1/2',
-    };
-    return positions[node] || '';
-  }
+      switch (step.action) {
+        case 'visit':
+          setVisitedNodes(prev => new Set(prev).add(step.node));
+          setCurrentNode(step.node);
+          setHighlightedEdge(null);
+          break;
+        case 'move':
+          setHighlightedEdge([step.from, step.to]);
+          break;
+        case 'backtrack':
+          setHighlightedEdge([step.from, step.to]);
+          setCurrentNode(step.to);
+          break;
+      }
 
-  function getCoordinates(node: string): { x: number, y: number } {
-    const coordinates: { [key: string]: { x: number, y: number } } = {
-      A: { x: 150, y: 0 },
-      B: { x: 75, y: 75 },
-      C: { x: 225, y: 75 },
-      D: { x: 75, y: 225 },
-      E: { x: 225, y: 225 },
-      F: { x: 150, y: 300 },
-    };
-    return coordinates[node] || { x: 0, y: 0 };
+      stepIndex++;
+    }, 1000); // Adjust timing as needed
+
+    return () => clearInterval(interval);
+  };
+
+  if (!traversalSteps) {
+    return <div>No traversal steps available</div>;
   }
 
   return (
     <div>
-      <div className="relative w-[300px] h-[300px]">
-        {Object.keys(graph).map((node) => (
-          <div
-            key={node}
-            className={`absolute w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold
-              ${getNodePosition(node)}`}
-          >
-            {node}
-          </div>
-        ))}
-        {Object.entries(graph).map(([node, neighbors]) =>
-          neighbors.map((neighbor) => (
-            <svg
-              key={`${node}-${neighbor}`}
-              className="absolute top-0 left-0 w-full h-full"
-              style={{ zIndex: -1 }}
-            >
+      <svg width="400" height="300">
+        {Object.entries(graph).map(([node, neighbors]) => (
+          <React.Fragment key={node}>
+            {neighbors.map(neighbor => (
               <line
-                x1={getCoordinates(node).x}
-                y1={getCoordinates(node).y}
-                x2={getCoordinates(neighbor).x}
-                y2={getCoordinates(neighbor).y}
-                stroke="black"
+                key={`${node}-${neighbor}`}
+                x1={nodePositions[node].x}
+                y1={nodePositions[node].y}
+                x2={nodePositions[neighbor].x}
+                y2={nodePositions[neighbor].y}
+                stroke={highlightedEdge &&
+                  ((highlightedEdge[0] === node && highlightedEdge[1] === neighbor) ||
+                    (highlightedEdge[1] === node && highlightedEdge[0] === neighbor))
+                  ? 'red'
+                  : 'black'}
                 strokeWidth="2"
               />
-            </svg>
-          ))
-        )}
-      </div>
+            ))}
+            <circle
+              cx={nodePositions[node].x}
+              cy={nodePositions[node].y}
+              r="22"
+              fill={visitedNodes.has(node) ? 'lightblue' : 'white'}
+              stroke={currentNode === node ? 'red' : 'black'}
+              strokeWidth="2"
+            />
+            <text
+              x={nodePositions[node].x}
+              y={nodePositions[node].y}
+              textAnchor="middle"
+              dy=".3em"
+            >
+              {node}
+            </text>
+          </React.Fragment>
+        ))}
+      </svg>
+      <div>Current Step: {currentStep + 1} / {traversalSteps.length}</div>
     </div>
   );
 

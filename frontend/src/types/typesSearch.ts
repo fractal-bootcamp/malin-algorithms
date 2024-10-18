@@ -8,10 +8,14 @@ export type Vertex = string;
 
 export type DFSAnimationProps = {
   graph: Graph<string>,
-  currentVertex: string,
-  target: string,
-  searchPath: Set<string> | null
+  traversalSteps: TraversalStep[] | null
 }
+
+export type TraversalStep = 
+  | { action: 'visit'; node: string; neighbours: string[] }
+  | { action: 'move'; from: string; to: string }
+  | { action: 'backtrack'; from: string; to: string };
+
 
 // bfs
 // Define the Queue interface

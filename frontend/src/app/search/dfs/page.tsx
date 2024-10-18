@@ -6,7 +6,8 @@ import React, { useEffect, useState } from "react";
 import {
   Graph,
   Vertex,
-  DFSAnimationProps
+  DFSAnimationProps,
+  TraversalStep
 } from "@/types/typesSearch"
 
 // Express utils stores the functions that will query the backend server with an unsortedArray and recieve a sortedArray
@@ -19,7 +20,7 @@ import DFSAnimation from "@/app/components/search/dfs";
 
 
 export default function Page() {
-  const [searchPath, setsearchPath] = useState<Set<string> | null>(null)
+  const [traversalHistory, setTraversalHistory] = useState<TraversalStep[] | null>(null)
   const graph: Graph<string> = {
     A: ['B', 'C'],
     B: ['A', 'D', 'E'],
@@ -30,13 +31,15 @@ export default function Page() {
   };
 
   const currentVertex: string = "A"
-  const target: string = "D"
+  const [target, setTarget] = useState<string>("C")
 
   useEffect(() => {
     const fetchSortData = async () => {
       try {
+        console.log('attempting to get data')
         const result = await getDFS(graph, currentVertex, target);
-        setsearchPath(result)
+        console.log('data', result)
+        setTraversalHistory(result)
       } catch (error) {
         console.error("Error fetching sort data:", error);
       }
@@ -55,7 +58,7 @@ export default function Page() {
           </div>
           <div className="flex flex-row">
             <div className="mx-12 border-2 p-20">
-              <DFSAnimation graph={graph} currentVertex={currentVertex} target={target} searchPath={searchPath} />
+              <DFSAnimation graph={graph} traversalSteps={traversalHistory} />
             </div>
             <div className="border-2 p-8">
               <p className="text-center font-bold mb-4">Select Search Target</p>
@@ -64,6 +67,7 @@ export default function Page() {
                   <button
                     key={node}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2"
+                    onClick={() => setTarget(node)}
                   >
                     {node}
                   </button>
