@@ -54,11 +54,11 @@ export default function Page() {
     return <div>Loading...</div>;
   }
 
-  const { sorted, stateHistory, swapIndexes } = sortState;
+  const { sorted, stateHistory, smallestIndexHistory } = sortState;
 
   return (
     <div>
-      <SelectionSortAnimation stateHistory={stateHistory} swapIndexes={swapIndexes} setArraySize={setArraySize} />
+      <SelectionSortAnimation sorted={sorted} stateHistory={stateHistory} setArraySize={setArraySize} smallestIndexHistory={smallestIndexHistory} />
     </div>
   )
 

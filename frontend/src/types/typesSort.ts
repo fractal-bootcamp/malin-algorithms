@@ -28,8 +28,9 @@ export interface SelectionSortState {
 }
 
 export interface SelectionSortAnimationProps {
+  sorted: number[]
   stateHistory: ArrayHistory[];
-  swapIndexes: Swaps[];
+  smallestIndexHistory: number[];
   setArraySize: React.Dispatch<React.SetStateAction<ArraySize>>
 }
 
