@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Link href="/">
-          <h1 className="bg-blue-600 text-white text-center shadow-md text-2xl p-4">Visualising Algorithms</h1>
+          <h1 className="bg-blue-500 text-white text-center shadow-md text-2xl p-4 font-mono">Visualising Algorithms</h1>
         </Link>
         <main className="flex-grow flex flex-col min-h-screen">
           {children}

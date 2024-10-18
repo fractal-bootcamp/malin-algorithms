@@ -8,7 +8,9 @@ export type Vertex = string;
 
 export type DFSAnimationProps = {
   graph: Graph<string>,
-  traversalSteps: TraversalStep[] | null
+  traversalSteps: TraversalStep[] | null,
+  target: string,
+  triggered: boolean
 }
 
 export type TraversalStep = 

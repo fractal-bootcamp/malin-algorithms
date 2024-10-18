@@ -12,9 +12,23 @@ const nodePositions: { [key: string]: { x: number; y: number } } = {
   F: { x: 250, y: 250 },
 };
 
+const CIRCLE_RADIUS = 22;
+
+function calculateLineEndpoint(x1: number, y1: number, x2: number, y2: number, radius: number) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const angle = Math.atan2(dy, dx);
+  return {
+    x: x2 - radius * Math.cos(angle),
+    y: y2 - radius * Math.sin(angle)
+  };
+}
+
 export default function DFSAnimation({
   graph,
-  traversalSteps
+  traversalSteps,
+  target,
+  triggered
 }: DFSAnimationProps) {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [visitedNodes, setVisitedNodes] = useState<Set<string>>(new Set());
@@ -22,13 +36,15 @@ export default function DFSAnimation({
   const [highlightedEdge, setHighlightedEdge] = useState<[string, string] | null>(null);
 
   useEffect(() => {
+    console.log('triggered', triggered)
     if (traversalSteps && traversalSteps.length > 0) {
       animateTraversal();
     }
-  }, [traversalSteps]);
+  }, [traversalSteps, triggered]);
 
   const animateTraversal = () => {
     if (!traversalSteps) return;
+
     let stepIndex = 0;
     const interval = setInterval(() => {
       if (stepIndex >= traversalSteps.length) {
@@ -65,32 +81,48 @@ export default function DFSAnimation({
   }
 
   return (
-    <div>
+    <div className='flex flex-col items-center'>
       <svg width="400" height="300">
         {Object.entries(graph).map(([node, neighbors]) => (
           <React.Fragment key={node}>
-            {neighbors.map(neighbor => (
-              <line
-                key={`${node}-${neighbor}`}
-                x1={nodePositions[node].x}
-                y1={nodePositions[node].y}
-                x2={nodePositions[neighbor].x}
-                y2={nodePositions[neighbor].y}
-                stroke={highlightedEdge &&
-                  ((highlightedEdge[0] === node && highlightedEdge[1] === neighbor) ||
-                    (highlightedEdge[1] === node && highlightedEdge[0] === neighbor))
-                  ? 'red'
-                  : 'black'}
-                strokeWidth="2"
-              />
-            ))}
+            {neighbors.map(neighbor => {
+              const start = calculateLineEndpoint(
+                nodePositions[neighbor].x,
+                nodePositions[neighbor].y,
+                nodePositions[node].x,
+                nodePositions[node].y,
+                CIRCLE_RADIUS
+              );
+              const end = calculateLineEndpoint(
+                nodePositions[node].x,
+                nodePositions[node].y,
+                nodePositions[neighbor].x,
+                nodePositions[neighbor].y,
+                CIRCLE_RADIUS
+              );
+              return (
+                <line
+                  key={`${node}-${neighbor}`}
+                  x1={start.x}
+                  y1={start.y}
+                  x2={end.x}
+                  y2={end.y}
+                  stroke={highlightedEdge &&
+                    ((highlightedEdge[0] === node && highlightedEdge[1] === neighbor) ||
+                      (highlightedEdge[1] === node && highlightedEdge[0] === neighbor))
+                    ? 'red'
+                    : 'black'}
+                  strokeWidth="2"
+                />
+              );
+            })}
             <circle
               cx={nodePositions[node].x}
               cy={nodePositions[node].y}
-              r="22"
-              fill={visitedNodes.has(node) ? 'lightblue' : 'white'}
+              r={CIRCLE_RADIUS}
+              fill={visitedNodes.has(node) ? '#9eedf0' : 'white'}
               stroke={currentNode === node ? 'red' : 'black'}
-              strokeWidth="2"
+              strokeWidth="3"
             />
             <text
               x={nodePositions[node].x}
@@ -103,7 +135,21 @@ export default function DFSAnimation({
           </React.Fragment>
         ))}
       </svg>
-      <div>Current Step: {currentStep + 1} / {traversalSteps.length}</div>
+      <div className='mt-10 font-serif text-xl'>
+        {
+          triggered
+            ?
+            (
+              <div>
+                <p className='text-center font-mono'>Searching for {target}</p>
+                <p className='text-center mt-2 font-mono'>Step: {currentStep + 1} / {traversalSteps.length}</p>
+              </div>
+            )
+            :
+            (
+              <p className='font-mono'>Select a Search Target</p>
+            )}
+      </div>
     </div>
   );
 
