@@ -23,7 +23,7 @@ const page = () => {
                 BFS</Link>
             </li>
             <li className="p-4 border-gray-300 w-64 h-24 flex justify-center items-center m-8">
-              <Link href="/binary-search"
+              <Link href="/search/dfs"
                 className="w-64 h-24 bg-white border-2 border-blue-300 rounded-lg shadow-md hover:shadow-md transition-all duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 flex justify-center items-center text-xl text-blue-600 font-semibold">
                 DFS</Link>
             </li>

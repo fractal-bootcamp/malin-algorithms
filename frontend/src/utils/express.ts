@@ -11,13 +11,16 @@ import type {
 	Vertex
 } from "@/types/typesSearch"
 
-// Search: DFS
-export async function getDFS(graph: Graph<string>, ): Promise<Set<string> | null> {
+// Search: DFS -> take in a graph and a target and return a set
+export async function getDFS(graph: Graph<string>, currentVertex: string, target: string): Promise<Set<string> | null> {
 	const res = await axios({
 		method: "POST",
-		url: "http://localhost:3001/algorithms/search/dfs-search",
+		url: "http://localhost:3001/algorithms/search/dfs",
+		// we're sending two pieces of data to the server -> graph and target
 		data: {
-			array: unsortedArray,
+			graph: graph,
+			currentVertex: currentVertex,
+			target: target
 		},
 	}); // send an unsortedArray and recieve a sorted Array
 	return res.data;

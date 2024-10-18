@@ -48,8 +48,31 @@ export default function Page() {
 
   return (
     <div>
-      <DFSAnimation graph={graph} currentVertex={currentVertex} target={target} searchPath={searchPath} />
+      <div className="flex flex-row justify-center items-center min-h-screen">
+        <div className="flex flex-col border-2">
+          <div>
+            <h2 className="text-4xl font-bold mb-16 text-center">Depth First Search</h2>
+          </div>
+          <div className="flex flex-row">
+            <div className="mx-12 border-2 p-20">
+              <DFSAnimation graph={graph} currentVertex={currentVertex} target={target} searchPath={searchPath} />
+            </div>
+            <div className="border-2 p-8">
+              <p className="text-center font-bold mb-4">Select Search Target</p>
+              <div className="flex flex-col items-center justify-center">
+                {Object.keys(graph).map((node) => (
+                  <button
+                    key={node}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2"
+                  >
+                    {node}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
-
 };
