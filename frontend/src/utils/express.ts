@@ -13,7 +13,7 @@ import type {
 } from "@/types/typesSearch"
 
 // Search: DFS -> take in a graph and a target and return a set
-export async function getDFS(graph: Graph<string>, currentVertex: string, target: string): Promise<TraversalStep[] | null> {
+export async function getDFS(graph: Graph<string>, currentVertex: string, target: string|null): Promise<TraversalStep[] | null> {
   try {
     const res = await axios({
       method: "POST",
