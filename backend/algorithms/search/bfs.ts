@@ -13,7 +13,7 @@ const graph: Graph<string> = {
 };
 
 // Define the Queue interface
-interface Queue<T> {
+type Queue<T> = {
   enqueue: (item: T) => void;
   dequeue: () => T | undefined;
   peek: () => T | undefined;
@@ -23,7 +23,7 @@ interface Queue<T> {
 
 
 const createQueue = () => {
-  const queue = [];
+  const queue:string[] = [];
   return {
     enqueue: (item: any) => queue.push(item), // add a vertice to the queue
     dequeue: () => {
@@ -40,7 +40,7 @@ const createQueue = () => {
   }
 }
 
-const bfs = (graph, startingVertex) => {
+const bfs = (graph: Graph<string>, startingVertex:string) => {
   // we need to create a queue
   const q = createQueue();
   const visited: string[] = [];
