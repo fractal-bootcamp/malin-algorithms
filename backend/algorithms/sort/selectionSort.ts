@@ -32,7 +32,7 @@ export const selectionSort = (unsortedArray: number[]): SelectionSortState => {
     return array;
   }
   
-  for (let i = 0; i < unsortedArray.length; i++) {
+  for (let i = 0; i < unsortedArray.length - 1; i++) {
     let indexOfSmallest = i;
     
     // starting at the (i+1)th position so we don't include the first value in the array
@@ -49,8 +49,11 @@ export const selectionSort = (unsortedArray: number[]): SelectionSortState => {
     // we need to take this and add it to the beginning
     moveArrayItem(unsortedArray, indexOfSmallest, i)
   }
+  // Add the final sorted state
+  arrayStateHistory.push([[...unsortedArray], [unsortedArray.length - 1]])
+
   const sortedArray = [...unsortedArray]
-  console.log(arrayStateHistory[1])
+  
 
 
   return {
@@ -61,4 +64,4 @@ export const selectionSort = (unsortedArray: number[]): SelectionSortState => {
   }
 }
 
-console.log(selectionSort([59,3,6,7,2,8,49,32,20]))
+console.log(selectionSort([59,24, 3,6,7,2,8,49,32,20]))
