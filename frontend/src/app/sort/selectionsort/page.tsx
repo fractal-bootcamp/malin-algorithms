@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 // Types
 import {
   SelectionSortState,
-  ArrayHistory,
-  Swaps,
   ArraySize
 } from "@/types/typesSort"
 

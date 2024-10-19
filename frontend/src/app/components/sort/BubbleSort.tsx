@@ -40,7 +40,7 @@ const BubbleSortAnimation: React.FC<BubbleSortAnimationProps> = ({
     }, 50);
 
     return () => clearTimeout(timeoutId)
-  }, [animationIndex, isFinished, isRunning])
+  }, [animationIndex, isFinished, isRunning, stateHistory, swapIndexes])
 
   const handleBubbleSort = () => {
     // ideally this will call the bubbleSort function, which will pass state for every position change

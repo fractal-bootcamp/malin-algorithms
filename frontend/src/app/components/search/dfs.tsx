@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import type { Graph, DFSAnimationProps, TraversalStep } from '@/types/typesSearch';
-
+import React, { useState, useEffect, useCallback } from 'react';
+import type { DFSAnimationProps } from '@/types/typesSearch';
 
 // Node positions (you might want to calculate these dynamically for larger graphs)
 const nodePositions: { [key: string]: { x: number; y: number } } = {
@@ -35,14 +34,7 @@ export default function DFSAnimation({
   const [currentNode, setCurrentNode] = useState<string | null>(null);
   const [highlightedEdge, setHighlightedEdge] = useState<[string, string] | null>(null);
 
-  useEffect(() => {
-    console.log('triggered', triggered)
-    if (traversalSteps && traversalSteps.length > 0) {
-      animateTraversal();
-    }
-  }, [traversalSteps, triggered]);
-
-  const animateTraversal = () => {
+  const animateTraversal = useCallback(() => {
     if (!traversalSteps) return;
 
     let stepIndex = 0;
@@ -74,7 +66,14 @@ export default function DFSAnimation({
     }, 1000); // Adjust timing as needed
 
     return () => clearInterval(interval);
-  };
+  }, [traversalSteps]);
+
+  useEffect(() => {
+    console.log('triggered', triggered)
+    if (traversalSteps && traversalSteps.length > 0) {
+      animateTraversal();
+    }
+  }, [traversalSteps, triggered, animateTraversal]);
 
   if (!traversalSteps) {
     return <div>No traversal steps available</div>;

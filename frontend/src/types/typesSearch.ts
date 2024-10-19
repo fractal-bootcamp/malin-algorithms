@@ -18,7 +18,6 @@ export type TraversalStep =
   | { action: 'move'; from: string; to: string }
   | { action: 'backtrack'; from: string; to: string };
 
-
 // bfs
 // Define the Queue interface
 export type Queue<T> = {

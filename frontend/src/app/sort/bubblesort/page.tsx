@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 // Types
 import {
   BubbleSortState,
-  ArrayHistory,
-  Swaps,
   ArraySize
 } from "@/types/typesSort"
 
@@ -20,7 +18,7 @@ import BubbleSortAnimation from "@/app/components/sort/BubbleSort";
 
 
 export default function Page() {
-  const unsortedArray = [22, 13, 71, 49, 37, 27, 11, 7, 42, 67, 103];
+  // const unsortedArray = [22, 13, 71, 49, 37, 27, 11, 7, 42, 67, 103];
   const [sortState, setSortState] = useState<BubbleSortState | null>(null);
   const [arraySize, setArraySize] = useState<ArraySize>("small")
   // const [sorted, setSorted] = useState<number[]>([])
@@ -56,7 +54,7 @@ export default function Page() {
     return <div>Loading...</div>;
   }
 
-  const { sorted, stateHistory, swapIndexes } = sortState;
+  const { stateHistory, swapIndexes } = sortState;
 
   return (
     <div>

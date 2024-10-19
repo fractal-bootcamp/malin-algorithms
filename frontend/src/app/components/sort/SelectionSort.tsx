@@ -2,20 +2,12 @@ import { useState, useEffect } from "react";
 
 import type {
   SelectionSortAnimationProps,
-  SelectionSortState,
-  Swaps,
-  ArrayHistory,
-  ArraySize
 } from "@/types/typesSort"
-
-
-type ArraySize = 'small' | 'medium' | 'large';
 
 // visualise initial state
 const SelectionSortAnimation: React.FC<SelectionSortAnimationProps> = ({
   sorted,
   stateHistory,
-  smallestIndexHistory,
   setArraySize
 }) => {
   const [animationIndex, setAnimationIndex] = useState<number>(0)
