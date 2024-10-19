@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 // Types
 import {
   Graph,
-  Vertex,
-  DFSAnimationProps,
   TraversalStep
 } from "@/types/typesSearch"
 

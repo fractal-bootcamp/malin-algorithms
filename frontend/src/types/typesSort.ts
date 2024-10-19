@@ -1,5 +1,5 @@
 // bubble sort
-export type Swaps = [number, number] | [null, null]
+export type Swaps = number[]
 
 export type ArrayHistory = number[][]
 

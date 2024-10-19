@@ -8,7 +8,6 @@ import type {
 
 import type {
 	Graph,
-	Vertex,
 	TraversalStep
 } from "@/types/typesSearch"
 
