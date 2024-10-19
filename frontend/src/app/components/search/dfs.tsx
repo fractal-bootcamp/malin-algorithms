@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Graph, DFSAnimationProps, TraversalStep } from '@/types/typesSearch';
 
-
 // Node positions (you might want to calculate these dynamically for larger graphs)
 const nodePositions: { [key: string]: { x: number; y: number } } = {
   A: { x: 200, y: 50 },

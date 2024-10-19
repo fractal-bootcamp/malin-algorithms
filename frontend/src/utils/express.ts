@@ -12,12 +12,14 @@ import type {
 	TraversalStep
 } from "@/types/typesSearch"
 
+const SERVER_URL = 'https://algorithm-visualisations-express-production.up.railway.app'
+
 // Search: DFS -> take in a graph and a target and return a set
 export async function getDFS(graph: Graph<string>, currentVertex: string, target: string|null): Promise<TraversalStep[] | null> {
   try {
     const res = await axios({
       method: "POST",
-      url: "http://localhost:3001/algorithms/search/dfs",
+      url: `${SERVER_URL}/algorithms/search/dfs`,
       data: {
         graph,
         currentVertex,
@@ -41,7 +43,7 @@ export async function getDFS(graph: Graph<string>, currentVertex: string, target
 export async function getBubbleSort(unsortedArray: number[]): Promise<BubbleSortState> {
 	const res = await axios({
 		method: "POST",
-		url: "http://localhost:3001/algorithms/sort/bubble",
+		url: `${SERVER_URL}/algorithms/sort/bubble`,
 		data: {
 			array: unsortedArray,
 		},
@@ -53,7 +55,7 @@ export async function getBubbleSort(unsortedArray: number[]): Promise<BubbleSort
 export async function getSelectionSort(unsortedArray: number[]): Promise<SelectionSortState> {
 	const res = await axios({
 		method: "POST",
-		url: "http://localhost:3001/algorithms/sort/selection",
+		url: `${SERVER_URL}/algorithms/sort/selection`,
 		data: {
 			array: unsortedArray,
 		},
