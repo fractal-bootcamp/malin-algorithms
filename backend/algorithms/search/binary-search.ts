@@ -1,4 +1,4 @@
-const sortedArray = [3, 5, 13, 15, 24, 25, 31, 32, 37, 39, 40, 42, 43, 58]
+const sortedArray = [3, 5, 13, 15, 24, 25, 32, 37, 39, 40, 42, 43, 58]
 
 export const binarySearch = (sortedArray: number[], e: number) => {
 	// define the target element e
@@ -31,3 +31,5 @@ export const binarySearch = (sortedArray: number[], e: number) => {
   console.log("targetValue not found in array")
   return
 }
+
+console.log(binarySearch(sortedArray,40))
